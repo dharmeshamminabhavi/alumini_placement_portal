@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: alumni-portal-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: alumni-portal
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - alumni-network
+
+  # Backend API Server
+  backend:
+    build:
+      context: .
+      dockerfile: ./server/dockerfile
+    container_name: alumni-portal-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/alumni-portal
+      - JWT_SECRET=your-secret-key
+    volumes:
+      - ./server:/app/server
+      - /app/node_modules
+    depends_on:
+      - mongodb
+    networks:
+      - alumni-network
+
+  # Frontend React App
+  frontend:
+    build:
+      context: .
+      dockerfile: ./client/dockerfile
+    container_name: alumni-portal-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000/api
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - alumni-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  alumni-network:

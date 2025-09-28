@@ -15,14 +15,16 @@ import {
 const Home = () => {
   const { isAuthenticated, loading } = useAuth();
 
-  // Redirect authenticated users to dashboard
-  if (!loading && isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
-  }
+  // Always call hooks before any conditional returns
   const { data: stats } = useQuery('homeStats', async () => {
     const reviews = await reviewsAPI.getAll({ limit: 1 });
     return { reviews };
   });
+
+  // Redirect authenticated users to dashboard
+  if (!loading && isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const features = [
     {

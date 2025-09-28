@@ -12,23 +12,30 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run install-client && npm run build"
   },
-  "keywords": ["alumni", "placement", "reviews", "mern", "react", "nodejs"],
+  "keywords": [
+    "alumni",
+    "placement",
+    "reviews",
+    "mern",
+    "react",
+    "nodejs"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^7.5.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.10.0",
     "express-validator": "^7.0.1",
-    "multer": "^1.4.5-lts.1",
     "helmet": "^7.0.0",
-    "express-rate-limit": "^6.10.0"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.5.0",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.1"
   }
-} 
+}
